@@ -13,6 +13,8 @@ Select a field to view relevant projects.
 
 ### [Quantitative Finance](projects/finance)
 
+### [Spatial Analysis](projects/spatial)
+
 ### [Transportation Engineering](projects/transportation)
 
 ### [Water Engineering](projects/water)
