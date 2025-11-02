@@ -9,6 +9,8 @@ BSc Materials Engineering • Self-Directed Projects & Research
 ## Fields
 Select a field to view relevant projects.
 
+### [Project Management](projects/management)
+
 ### [Quantitative Finance](projects/finance)
 
 ### [Transportation Engineering](projects/transportation)
