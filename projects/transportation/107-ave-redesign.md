@@ -19,12 +19,13 @@ The corridor of 107 Ave between 124 St and 120 St currently experiences recurrin
 ---
 
 ## Existing Conditions
-One significant contributor to the congestion on 107 Ave is the signalized shared-use pathway crossing at approximately the 121 St alignment. Particularly at peak times, the dispersed arrival pattern of users results in repeated short stoppages to vehicle traffic as the pedestrian phase is repeatedly triggered in close succession.  
+One significant contributor to the congestion on 107 Ave is the signalized shared-use pathway crossing at approximately the 121 St alignment. Particularly at peak times, the steady, dispersed arrival of users results in repeated short stoppages to vehicle traffic as the pedestrian phase is repeatedly triggered in close succession.  
 
 ---
 
 ## Possible Design Alternatives
-
+1. Extend the minimum time between crossings to increase the number of users crossing per cycle while decreasing vehicle traffic delays.
+2. 
 
 
 
