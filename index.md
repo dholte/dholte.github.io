@@ -4,7 +4,7 @@ title: Home
 ---
 
 ## Fields
-Select a field to view relevant analysis/research projects.
+**Select a field to view relevant analysis/research projects.**
 
 
 ### [Quantitative Finance](projects/finance)
