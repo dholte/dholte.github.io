@@ -11,7 +11,7 @@ All outlined analyses are purely educational, and were carried out with QGIS (ht
 
 ## [Drain Pipe Vulnerability Assessment](projects/spatial/drain-pipe)
 
-## [Hunting Saskatoon Berries](projects/spatial/saskatoon)
+## [Hunting Cherries](projects/spatial/cherry)
 
 ---
 
