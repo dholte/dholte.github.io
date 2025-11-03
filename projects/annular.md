@@ -22,9 +22,19 @@ In Horizontal Directional Drilling (HDD), drilling fluid is pumped downhole to c
 
 *IMAGE PLACEHOLDER: cred wikipedia user Krishnavedala*
 
-2. Borehole diameter D<sub>b</sub> and pipe outer diameter D<sub>p</sub> remain constant
+2. Borehole diameter *D<sub>b</sub>* and pipe outer diameter *D<sub>p</sub>* remain constant
 
-3. The pipe remains centered in the borehole for the entire length
+3. The pipe is centered in the borehole for the entire length
+
+4. The drilling fluid is Newtonian (constant dynamic viscosity, *μ*)
+
+5. The drilling fluid is incompressible (constant density, *ρ*)
+
+6. Steady flow
+
+7. Flow is hydraulically smooth
+
+8. The effect of drill cuttings is neglected 
 
 ## Physics
 
