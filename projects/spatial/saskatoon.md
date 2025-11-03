@@ -11,11 +11,11 @@ Saskatoon berries are the fruit of the Saskatoon, a small tree/shrub belonging t
 
 NOTE: Typically, spatial analysis consists of five key stages: understanding your goal, preparing data, choosing suitable tools and techniques, performing the research, and estimating results.
 
-### Analysis Goal
+## Analysis Goal
 
 Identify locations within the City of Edmonton most likely to contain large quantities of unpicked, ripe saskatoon berries.
 
-### Initial Dataset and Search Parameters
+## Initial Dataset and Search Parameters
 
 To begin the analysis, it is assumed that the following characteristics will *increase* the likelihood of a specific location having large quantities of unpicked saskatoon berries:
 
