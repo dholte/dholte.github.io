@@ -1,13 +1,11 @@
 ---
 layout: default
-title: Hunting Saskatoon Berries
+title: Hunting Cherries
 ---
 
-# Hunting Saskatoon Berries
+# Hunting Cherries
 
 ## Background 
-
-Saskatoon berries are the fruit of the Saskatoon, a small tree/shrub belonging to the rose family which most often grows to between 1-8 meters in height. Although highly similar to blueberries in appearance, saskatoon berries are slightly smaller, and are described as having a nutty, almond-like flavor. Due to their popularity with humans and birds alike, locating ripe saskatoon berries in significant quantities can be challenging. 
 
 NOTE: Typically, spatial analysis consists of five key stages: understanding your goal, preparing data, choosing suitable tools and techniques, performing the research, and estimating results.
 
@@ -28,6 +26,8 @@ Next, SPECIES_BOTANICAL, GENUS, and SPECIES can all be removed, so long as all o
 *IMAGE PLACEHOLDER dataprep1*
 
 Their removal is validated after using the COUNTA function to confirm 100% of trees have their common species name included. The Point Location column contains the location of each tree in Well-Known Text (WKT) format, so the LATITUDE, LONGITUDE, AND LOCATION columns can all be removed. 
+
+To improve performance and reduce processing time, the data will be filtered to include only cherry trees before it is imported into QGIS. 
 
 ## Query Builder 
  
