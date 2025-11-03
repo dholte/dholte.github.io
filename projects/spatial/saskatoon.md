@@ -15,7 +15,7 @@ NOTE: Typically, spatial analysis consists of five key stages: understanding you
 
 Identify locations within the City of Edmonton most likely to contain large quantities of unpicked, ripe saskatoon berries.
 
-## Initial Dataset and Search Parameters
+## Data Preparation
 
 To begin the analysis, it is assumed that the following characteristics will *increase* the likelihood of a specific location having large quantities of unpicked saskatoon berries:
 
@@ -32,3 +32,5 @@ Based on the initial chracteristics outlined, the following datasets are require
 1. Edible Fruit Trees
 2. Trees
 3. River Valley - Trail Cautions and Closures Map
+
+## Query Builder 
