@@ -3,21 +3,15 @@ layout: default
 title: Home
 ---
 
-# Dallas Holte
-BSc Materials Engineering • Self-Directed Projects & Research
-
 ## Fields
-Select a field to view relevant projects.
+Select a field to view relevant analysis/research projects.
 
-### [Project Management](projects/management)
 
 ### [Quantitative Finance](projects/finance)
 
 ### [Spatial Analysis](projects/spatial)
 
 ### [Transportation Engineering](projects/transportation)
-
-### [Water Engineering](projects/water)
 
 
 ---
