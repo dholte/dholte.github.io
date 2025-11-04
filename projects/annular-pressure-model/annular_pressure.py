@@ -150,7 +150,55 @@ def ff_smooth(Re: float) -> float:
     w = (Re - 2100.0) / (3000.0 - 2100.0)
     return (1 - w) * f_lam + w * f_turb
 
+
 # ----------------------------
 # PRESSURE FUNCTIONS
 # ----------------------------
+
+def hydrostatic_profile(d, z, rho: float):
+    Ps = []
+    z_ref = z[0]
+    for zi in z:
+        Ps.append(rho * g * (z_ref - zi))
+    return Ps
+
+def friction_gradient_newtonian(rho: float, mu: float, Q: float, Db: float, Dp: float):
+    if Q < 0:
+        raise ValueError("Flow rate Q cannot be negative.")
+    Dh = hydraulic_diameter(Db, Dp)
+    Aa = annulus_area(Db, Dp)
+    v  = 0.0 if Q == 0 else Q / Aa
+    Re = reynolds_number(rho, v, Dh, mu)
+    if v == 0.0:
+        return 0.0, v, Re, Dh  # no flow, no friction
+    if Re <= 2100.0:
+        grad = 32.0 * mu * v / (Dh * Dh)
+    else:
+        f = ff_smooth(Re)  # your function
+        grad = f * rho * v * v / (2.0 * Dh)
+    return grad, v, Re, Dh
+
+def friction_profile(d, rho: float, mu: float, Q: float, Db: float, Dp: float):
+    if len(d) < 2:
+        return [0.0]
+    grad, v, Re, Dh = friction_gradient_newtonian(rho, mu, Q, Db, Dp)
+    Pf = [0.0]
+    acc = 0.0
+    for i in range(1, len(d)):
+        ds = d[i] - d[i-1]
+        if ds < 0:
+            raise ValueError("Displacement must be non-decreasing.")
+        acc += grad * ds
+        Pf.append(acc)
+    return Pf
+
+def pressure_profile_total(d, z, rho: float, mu: float, Q: float, Db: float, Dp: float, g: float = 9.80665):
+    Ps = hydrostatic_profile(d, z, rho, g)
+    Pf = friction_profile(d, rho, mu, Q, Db, Dp)
+    if len(Ps) != len(Pf):
+        raise ValueError("Ps and Pf lengths mismatch.")
+    Ptot = [ps + pf for ps, pf in zip(Ps, Pf)]
+    return Ps, Pf, Ptot
+
+
 
