@@ -5,7 +5,7 @@ Core functions for annular pressure model.
 
 import math          # import common mathematical functions and constants
 import warnings      # allows non-fatal warning messages
-g = 9.80665             # gravitational acceleration (m/s^2)
+g = 9.80665          # gravitational acceleration (m/s^2)
 
 # ----------------------------
 # ANNULUS GEOMETRY
@@ -199,6 +199,38 @@ def pressure_profile_total(d, z, rho: float, mu: float, Q: float, Db: float, Dp:
         raise ValueError("Ps and Pf lengths mismatch.")
     Ptot = [ps + pf for ps, pf in zip(Ps, Pf)]
     return Ps, Pf, Ptot
+
+
+# ---------------------------------
+# SINGLE WRAPPER FOR ALL FUNCTIONS
+# ---------------------------------
+
+def compute_pressure_profile(segments, theta_deg, z0, ds, rho, mu, Q, Db, Dp):
+    # 1) path
+    d, z = path_builder(segments, theta_deg=theta_deg, z0=z0, ds=ds)
+    # 2) geometry + hydraulics
+    Dh = hydraulic_diameter(Db, Dp)
+    Aa = annulus_area(Db, Dp)
+    v  = 0.0 if Q == 0 else Q / Aa
+    Re = reynolds_number(rho, v, Dh, mu)
+    # 3) pressures
+    Ps = hydrostatic_profile(d, z, rho)
+    Pf = friction_profile(d, rho, mu, Q, Db, Dp)
+    Ptot = [ps + pf for ps, pf in zip(Ps, Pf)]
+    # 4) quick stats
+    i_max = max(range(len(Ptot)), key=lambda i: Ptot[i])
+    results = {
+        "d": d, "z": z,
+        "Ps": Ps, "Pf": Pf, "Ptot": Ptot,
+        "Dh": Dh, "Aa": Aa, "v": v, "Re": Re,
+        "max_P": Ptot[i_max], "max_P_at_d": d[i_max], "max_depth_at_d": z[i_max]
+    }
+    # advisories
+    if 0.0 < v < 0.76:
+        warnings.warn("Annular velocity < 0.76 m/s (~150 ft/min).")
+    if Re > 2000:
+        warnings.warn(f"Re={Re:.0f} exceeds laminar regime; friction losses may be underpredicted.")
+    return results
 
 
 
