@@ -38,8 +38,8 @@ def path_builder(segments: list, theta_deg: float, z0: float = 0.0, ds: float = 
     # initialize starting conditions
     theta = math.radians(theta_deg)   # convert entry angle from degrees to radians
     z = [z0]                          # list creation for elevation values
-    s = [0.0]                         # list creation for station values
-    s_cum = 0.0                       # cumulative distance travelled along bore
+    d = [0.0]                         # list creation for horizontal displacement values
+    d_cum = 0.0                       # cumulative horizontal displacement
 
     for seg in segments:
         t = seg.get("type", "").lower()      
@@ -54,9 +54,9 @@ def path_builder(segments: list, theta_deg: float, z0: float = 0.0, ds: float = 
             ds_eff = L / n                        # effective step size
     
             for _ in range(n):
-                s_cum += ds_eff                                # advance by step size
+                d_cum += ds_eff                                # advance by step size
                 z_next = z[-1] + ds_eff * math.sin(theta)      # calculate next elevation
-                s.append(s_cum)
+                d.append(d_cum)
                 z.append(z_next)
 
         elif t == "arc":
@@ -71,19 +71,18 @@ def path_builder(segments: list, theta_deg: float, z0: float = 0.0, ds: float = 
             ds_eff = L / n
             dtheta = d_rad / n                     # per step change in theta
 
-            # Along an arc: dθ/ds = kappa; dz/ds = sin(θ)
             for _ in range(n):
-                s_cum += ds_eff           
+                d_cum += ds_eff           
                 theta_mid = theta + 0.5 * dtheta                  # midpoint approximation (assumes linear theta change)
                 z_next = z[-1] + ds_eff * math.sin(theta_mid)
-                s.append(s_cum)
+                d.append(d_cum)
                 z.append(z_next)
                 theta += dtheta  
 
         else:
             raise ValueError(f"Unknown segment type: {t}")
 
-    return s, z
+    return d, z
 
 # ----------------------------
 # FLOW FUNCTIONS
