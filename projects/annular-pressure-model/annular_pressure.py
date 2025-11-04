@@ -3,8 +3,9 @@ annular_pressure.py
 Core functions for annular pressure model.
 """
 
-import math      # import common mathematical functions and constants
-g = 9.81         # gravitational acceleration (m/s^2)
+import math          # import common mathematical functions and constants
+import warnings      # allows non-fatal warning messages
+g = 9.81             # gravitational acceleration (m/s^2)
 
 # ----------------------------
 # ANNULUS GEOMETRY
@@ -94,7 +95,7 @@ def annular_velocity(Q: float, Db: float, Dp: float) -> float:
     v = Q / annulus_area(Db,Dp)
     if v < 0.762:                # recommended minimum annular velocity of 150 ft/min = 0.762 m/s                                                
         warnings.warn(
-            f"Annular velocity {v: .2f} is below the recommended "
+            f"Annular velocity of {v: .2f} is below the recommended "
             f"minimum of 0.762 m/s for effective cuttings removal.",
             UserWarning,
         )            
@@ -102,6 +103,12 @@ def annular_velocity(Q: float, Db: float, Dp: float) -> float:
 def target_velocity_flow(v_target: float, Db: float, Dp: float) -> float:
     if v_target <= 0:
         raise ValueError("Target annular velocity must be positive.")
+    if v_target < 0.762:
+        warnings.warn(
+            f"Target annular velocity of {v_target:.2f} m/s is below the "
+            f"recommended minimum of 0.762 m/s for effective cuttings removal.",
+            UserWarning,
+        )
     return v_target * annulus_area(Db, Dp)
     
 
