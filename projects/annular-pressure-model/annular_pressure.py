@@ -5,7 +5,7 @@ Core functions for annular pressure model.
 
 import math          # import common mathematical functions and constants
 import warnings      # allows non-fatal warning messages
-g = 9.81             # gravitational acceleration (m/s^2)
+g = 9.80665             # gravitational acceleration (m/s^2)
 
 # ----------------------------
 # ANNULUS GEOMETRY
@@ -85,7 +85,7 @@ def path_builder(segments: list, theta_deg: float, z0: float = 0.0, ds: float = 
     return d, z
 
 # ----------------------------
-# FLOW FUNCTIONS
+# VELOCITY
 # ----------------------------
 
 def annular_velocity(Q: float, Db: float, Dp: float) -> float:
@@ -111,6 +111,9 @@ def target_velocity_flow(v_target: float, Db: float, Dp: float) -> float:
         )
     return v_target * annulus_area(Db, Dp)
 
+# ----------------------------
+# REYNOLDS
+# ----------------------------
 
 def dynamic_reynolds(rho: float, v: float, Dh: float, mu: float) -> float:
     if rho <= 0:
@@ -134,7 +137,6 @@ def kinematic_reynolds(v: float, Dh: float, nu: float) -> float:
     return (v * Dh) / nu
 
 
-
 def ff_smooth(Re: float) -> float:
     if Re <= 0:
         raise ValueError("Reynolds number must be positive.")
@@ -147,4 +149,8 @@ def ff_smooth(Re: float) -> float:
     f_turb = 0.3164 * (3000.0 ** -0.25)
     w = (Re - 2100.0) / (3000.0 - 2100.0)
     return (1 - w) * f_lam + w * f_turb
+
+# ----------------------------
+# PRESSURE FUNCTIONS
+# ----------------------------
 
