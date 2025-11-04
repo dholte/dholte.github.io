@@ -35,8 +35,8 @@ def path_builder(segments: list, theta0_deg: float, z0: float = 0.0, ds: float =
         raise ValueError("ds must be positive.")
 
     # initialize starting conditions
-    theta = math.radians(theta0_deg)  # grade angle (radians)
-    z = [z0]
+    theta = math.radians(theta0_deg)  # convert entry angle from degrees to radians
+    z = [z0]                          # list creation to store elevation values
     s = [0.0]
     s_accum = 0.0
 
