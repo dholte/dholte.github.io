@@ -6,7 +6,7 @@ title: Simple Annular Pressure Modelling
 # Simple Annular Pressure Modelling
 
 ## Background
-In Horizontal Directional Drilling (HDD), drilling fluid is pumped downhole to cool and lubricate the drill bit, help extract cuttings, and create downhole stability. The gap between the borehole wall and the pipe installed within is referred to as the annulus. During drilling, the drilling fluid fills the annulus and exerts pressure on the ground surrounding the borehole, referred to as annular pressure. If the annular pressure becomes too high at any point along the borehole, it can lead to the uncontrolled fracture of the soil and subsequent escape of drilling fluid from the borehole, known as frac-out. Frac-out poses both environmental and infrastructure risks, and is considered a critical risk in HDD. To minimize the risk of frac-out, modelling annular pressure during HDD operation is critical.  
+In Horizontal Directional Drilling (HDD), drilling fluid is pumped downhole to cool and lubricate the drill bit, help extract cuttings, and create downhole stability. The gap between the borehole wall and the pipe installed within is referred to as the annulus. During drilling, the drilling fluid fills the annulus and exerts pressure on the ground surrounding the borehole, referred to as annular pressure. If the annular pressure becomes too high at a specific point, it can lead to uncontrolled soil fracture and subsequent escape of drilling fluid from the borehole, known as frac-out. Frac-out poses both environmental and infrastructure risks, and is considered a critical risk in HDD operation. To minimize the risk of frac-out, it is necessary to model annular pressure during operation.  
 
 *IMAGE PLACEHOLDER: https://www.chasolutions.com/sites/default/assets/HDD_Blog/HDD-3a.jpg*
 
@@ -18,25 +18,30 @@ In Horizontal Directional Drilling (HDD), drilling fluid is pumped downhole to c
 
 ## Assumptions
 
-1. The borehole path can be approximated using a piecewise linear function
+1. The bore path can be represented using a piecewise function of linear or arc-segment components
 
 *IMAGE PLACEHOLDER: cred wikipedia user Krishnavedala*
 
-2. Borehole diameter *D<sub>b</sub>* and pipe outer diameter *D<sub>p</sub>* remain constant
+2. The bore path is treated as 2-dimensional, with no left/right deviation
 
-3. The pipe is centered in the borehole for the entire length
+3. Borehole diameter *D<sub>b</sub>* and pipe outer diameter *D<sub>p</sub>* remain constant
 
-4. The drilling fluid is Newtonian (constant dynamic viscosity, *μ*)
+4. The pipe is centered in the borehole (concentric annulus)
 
-5. The drilling fluid is incompressible (constant density, *ρ*)
+5. The drilling fluid is Newtonian and incompressible (constant dynamic viscosity *μ* and density *ρ*)
 
 6. Steady flow
 
 7. Flow is hydraulically smooth
 
-8. The effect of drill cuttings is neglected 
+8. The effect of drill cuttings on fluid properties is neglected 
 
-## Physics
+## Core Functions
+The first step is creating the core functions required for the model. The first two functions (pictured below) calculate the cross-sectional area and hydraulic diameter of the concentric annulus, and are fairly self-explanatory.
+
+*IMAGE PLACEHOLDER: corefunctions1*
+
+Next, a piecewise . 
 
 
 
