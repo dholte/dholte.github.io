@@ -100,6 +100,7 @@ def annular_velocity(Q: float, Db: float, Dp: float) -> float:
             UserWarning,
         )            
 
+
 def target_velocity_flow(v_target: float, Db: float, Dp: float) -> float:
     if v_target <= 0:
         raise ValueError("Target annular velocity must be positive.")
@@ -110,15 +111,29 @@ def target_velocity_flow(v_target: float, Db: float, Dp: float) -> float:
             UserWarning,
         )
     return v_target * annulus_area(Db, Dp)
-    
 
 
+def dynamic_reynolds(rho: float, v: float, Dh: float, mu: float) -> float:
+    if rho <= 0:
+        raise ValueError("Density must be positive.")
+    if Dh <= 0:
+        raise ValueError("Hydraulic diameter must be positive.")
+    if mu <= 0:
+        raise ValueError("Dynamic viscosity must be positive.")
+    if v <= 0:
+        raise ValueError("Velocity must be positive.")
+    return (rho * v * Dh) / mu
 
-def reynolds_number(rho: float, v: float, Dh: float, mu: float) -> float:
-    """Reynolds number (–): Re = rho * v * Dh / mu."""
-    if any(x <= 0 for x in (rho, Dh, mu)) or v < 0:
-        raise ValueError("rho, Dh, mu must be > 0 and v >= 0.")
-    return 0.0 if v == 0 else (rho * v * Dh) / mu
+
+def kinematic_reynolds(v: float, Dh: float, nu: float) -> float:
+    if Dh <= 0:
+        raise ValueError("Hydraulic diameter must be positive.")
+    if nu <= 0:
+        raise ValueError("Kinematic viscosity must be positive.")
+    if v <= 0:
+        raise ValueError("Velocity must be positive.")
+    return (v * Dh) / nu
+
 
 
 def ff_smooth(Re: float) -> float:
