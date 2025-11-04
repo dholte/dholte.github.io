@@ -212,7 +212,7 @@ def compute_pressure_profile(segments, theta_deg, z0, ds, rho, mu, Q, Db, Dp):
     Dh = hydraulic_diameter(Db, Dp)
     Aa = annulus_area(Db, Dp)
     v  = 0.0 if Q == 0 else Q / Aa
-    Re = reynolds_number(rho, v, Dh, mu)
+    Re = dynamic_reynolds(rho, v, Dh, mu)
     # 3) pressures
     Ps = hydrostatic_profile(d, z, rho)
     Pf = friction_profile(d, rho, mu, Q, Db, Dp)
