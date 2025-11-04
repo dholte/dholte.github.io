@@ -30,58 +30,56 @@ def hydraulic_diameter(Db: float, Dp: float): -> float
 # PATH BUILDER
 # ----------------------------
 
-def path_builder(segments: list, theta0_deg: float, z0: float = 0.0, ds: float = 1.0):
+def path_builder(segments: list, theta_deg: float, z0: float = 0.0, ds: float = 1.0):
     if ds <= 0:
         raise ValueError("ds must be positive.")
 
     # initialize starting conditions
-    theta = math.radians(theta0_deg)  # convert entry angle from degrees to radians
-    z = [z0]                          # list creation to store elevation values
-    s = [0.0]
-    s_accum = 0.0
+    theta = math.radians(theta_deg)   # convert entry angle from degrees to radians
+    z = [z0]                          # list creation for elevation values
+    s = [0.0]                         # list creation for station values
+    s_cum = 0.0                       # cumulative distance travelled along bore
 
     for seg in segments:
         t = seg.get("type", "").lower()      
+    # defaults to empty string if key "type" doesn't exist to prevent crash
     # converts to lowercase to avoid errors due to capitalization
        
       if t == "tangent":
-            L = float(seg["length"])
+            L = float(seg["length"])       
             if L <= 0:
                 raise ValueError("Tangent length must be positive.")
-            n = max(1, int(round(L / ds)))
-            ds_eff = L / n
-            # March along with constant theta
+            n = max(1, int(round(L / ds)))        # determine number of steps to divide tangent based on sampling interval
+            ds_eff = L / n                        # effective step size
+    
             for _ in range(n):
-                s_accum += ds_eff
-                # dz/ds = sin(theta)  (vertical component of along-path)
-                z_next = z[-1] + ds_eff * math.sin(theta)
-                s.append(s_accum)
+                s_cum += ds_eff                                # advance by step size
+                z_next = z[-1] + ds_eff * math.sin(theta)      # calculate next elevation
+                s.append(s_cum)
                 z.append(z_next)
 
         elif t == "arc":
-            R = float(seg["R"])
-            d_deg = float(seg["delta_deg"])
+            R = float(seg["R"])                    # arc radius
+            d_deg = float(seg["delta_deg"])        # deflection angle
             if R <= 0:
                 raise ValueError("Arc radius R must be positive.")
+                
             d_rad = math.radians(d_deg)
-            L = abs(R * d_rad)  # along-path arc length
+            L = abs(R * d_rad)                     # calculate arc length
             n = max(1, int(round(L / ds)))
             ds_eff = L / n
-            kappa = (1.0 / R) * (1.0 if d_rad >= 0 else -1.0)  # signed curvature
+            kappa = (1.0 / R) * (1.0 if d_rad >= 0 else -1.0) 
 
             # Along an arc: dθ/ds = kappa; dz/ds = sin(θ)
             for _ in range(n):
-                # advance by ds_eff with current theta
-                s_accum += ds_eff
-                # theta advances linearly with s
-                theta_next = theta + kappa * ds_eff
-                # integrate dz over the small step using midpoint theta (better than Euler)
-                theta_mid = 0.5 * (theta + theta_next)
+                s_cum += ds_eff
+                theta_next = theta + kappa * ds_eff               # determine theta at next step based on curvature
+                theta_mid = 0.5 * (theta + theta_next)            # midpoint approximation (assumes linear theta change)
                 z_next = z[-1] + ds_eff * math.sin(theta_mid)
 
-                s.append(s_accum)
+                s.append(s_cum)
                 z.append(z_next)
-                theta = theta_next  # update grade angle
+                theta = theta_next  
 
         else:
             raise ValueError(f"Unknown segment type: {t}")
