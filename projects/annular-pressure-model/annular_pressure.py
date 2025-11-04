@@ -42,8 +42,8 @@ def path_builder(segments: list, theta_deg: float, z0: float = 0.0, ds: float = 
 
     for seg in segments:
         t = seg.get("type", "").lower()      
-    # defaults to empty string if key "type" doesn't exist to prevent crash
-    # converts to lowercase to avoid errors due to capitalization
+        # defaults to empty string if key "type" doesn't exist to prevent crash
+        # converts to lowercase to avoid errors due to capitalization
        
       if t == "tangent":
             L = float(seg["length"])       
@@ -68,18 +68,16 @@ def path_builder(segments: list, theta_deg: float, z0: float = 0.0, ds: float = 
             L = abs(R * d_rad)                     # calculate arc length
             n = max(1, int(round(L / ds)))
             ds_eff = L / n
-            kappa = (1.0 / R) * (1.0 if d_rad >= 0 else -1.0) 
+            dtheta = d_rad / n                     # per step change in theta
 
             # Along an arc: dθ/ds = kappa; dz/ds = sin(θ)
             for _ in range(n):
-                s_cum += ds_eff
-                theta_next = theta + kappa * ds_eff               # determine theta at next step based on curvature
-                theta_mid = 0.5 * (theta + theta_next)            # midpoint approximation (assumes linear theta change)
+                s_cum += ds_eff           
+                theta_mid = theta + 0.5 * dtheta                  # midpoint approximation (assumes linear theta change)
                 z_next = z[-1] + ds_eff * math.sin(theta_mid)
-
                 s.append(s_cum)
                 z.append(z_next)
-                theta = theta_next  
+                theta += dtheta  
 
         else:
             raise ValueError(f"Unknown segment type: {t}")
