@@ -88,13 +88,23 @@ def path_builder(segments: list, theta_deg: float, z0: float = 0.0, ds: float = 
 # FLOW FUNCTIONS
 # ----------------------------
 
-def mean_velocity(Q: float, Aa: float) -> float:
-    """Mean fluid velocity in annulus (m/s): v = Q / Aa."""
-    if Q < 0:
-        raise ValueError("Flow rate cannot be negative.")
-    if Aa <= 0:
-        raise ValueError("Annulus area must be positive.")
-    return 0.0 if Q == 0 else Q / Aa
+def annular_velocity(Q: float, Db: float, Dp: float) -> float:
+    if Q <= 0: 
+        raise ValueError("Volumetric flow rate must be positive.")
+    v = Q / annulus_area(Db,Dp)
+    if v < 0.762:                # recommended minimum annular velocity of 150 ft/min = 0.762 m/s                                                
+        warnings.warn(
+            f"Annular velocity {v: .2f} is below the recommended "
+            f"minimum of 0.762 m/s for effective cuttings removal.",
+            UserWarning,
+        )            
+
+def target_velocity_flow(v_target: float, Db: float, Dp: float) -> float:
+    if v_target <= 0:
+        raise ValueError("Target annular velocity must be positive.")
+    return v_target * annulus_area(Db, Dp)
+    
+
 
 
 def reynolds_number(rho: float, v: float, Dh: float, mu: float) -> float:
