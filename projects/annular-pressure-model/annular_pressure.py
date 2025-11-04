@@ -137,12 +137,11 @@ def kinematic_reynolds(v: float, Dh: float, nu: float) -> float:
 
 
 def ff_smooth(Re: float) -> float:
-    """Darcy friction factor (–): laminar 64/Re; turbulent Blasius; linear blend in transition."""
     if Re <= 0:
-        return 0.0
-    if Re <= 2100.0:           # laminar
+        raise ValueError("Reynolds number must be positive.")
+    if 0 < Re <= 2100.0:           
         return 64.0 / Re
-    if Re >= 3000.0:           # turbulent (Blasius)
+    if Re >= 3000.0:           
         return 0.3164 * (Re ** -0.25)
     # transitional: linear blend for smoothness
     f_lam = 64.0 / 2100.0
