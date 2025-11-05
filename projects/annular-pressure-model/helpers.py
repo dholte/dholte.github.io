@@ -39,9 +39,6 @@ def total_pressure_from_gradients(d, z, rho: float, seg_id, grads_per_seg):
     return Ps, Pf, Ptot
 
 
-import numpy as np
-import math
-
 def _to_seg_array(x, nseg: int):
     """Broadcast a scalar to length nseg, or pass through an array-like."""
     if isinstance(x, (list, tuple, np.ndarray)):
